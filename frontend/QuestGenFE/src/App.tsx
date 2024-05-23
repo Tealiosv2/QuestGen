@@ -1,13 +1,17 @@
-import NavBar from "./components/AppComponents/NavBar";
-import StageDisplay from "./components/AppComponents/StageDisplay";
-import StageSettings from "./components/AppComponents/StageSettings";
+import Stage from "./components/AppComponents/Stage";
+
+const marginStyles = {
+    marginLeft: "100px",
+    marginRight: "100px",
+    marginTop: "40px",
+};
 
 function App() {
     return (
         <>
-            <NavBar />
-            <StageDisplay />
-            <StageSettings />
+            <div style={marginStyles}>
+                <Stage />
+            </div>
         </>
     );
 }
