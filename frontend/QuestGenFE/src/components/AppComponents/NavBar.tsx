@@ -1,11 +1,10 @@
-import { DefaultButton } from "@fluentui/react/lib/Button";
+function NavBar({ StageMessages, setStageMessages }) {
+    // Import stage data
 
-function NavBar() {
     return (
         <>
-            <DefaultButton text="Tree View" />
-            <DefaultButton text="New Branch" />
-            <DefaultButton text="New Leaf" />
+            <button>Export</button>
+            <button>Import</button>
         </>
     );
 }
