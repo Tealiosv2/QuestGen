@@ -15,9 +15,9 @@ def init_chatbot():
     # chatbot.login()
     # return 'jerrz',200
     if 'username' not in request.form:
-        return 'username field not in request', 200
+        return 'username field not in request', 400
     if 'password' not in request.form:
-        return 'password field not in request', 200
+        return 'password field not in request', 400
     
     username = request.form['username']
     password = request.form['password']
@@ -32,7 +32,7 @@ def init_chatbot():
     chatbots[username] = chatbot
     # return a uid
 
-    return "Login successful, chatbot is running"
+    return jsonify({'uid': str(username)}), 200
 
 @app.route('/query', methods=['POST'])
 def query():
@@ -40,9 +40,9 @@ def query():
     # chatbots[credential].prompt(given_message)
     # return response, 200
     if 'uid' not in request.form:
-        return 'uid field not in request', 200
+        return 'uid field not in request', 400
     if 'prompt' not in request.form:
-        return 'prompt field not in request', 200
+        return 'prompt field not in request', 400
 
     uid = request.form.get('uid')
     prompt = request.form.get('prompt')
