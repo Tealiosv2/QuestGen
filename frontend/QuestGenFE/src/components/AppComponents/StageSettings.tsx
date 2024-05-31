@@ -1,35 +1,31 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
 import { StageMessage } from "./Stage";
-function StageSettings({ StageMessages, setStageMessages }) {
-    const [deletedMessages, setDeletedMessages] = useState<Array<StageMessage>>(
-        []
-    );
-
-    const submitPrompt = () => {
-        setStageMessages((prevStageMessages) =>
-            prevStageMessages.concat({
-                content: "Stage Data",
-                key: prevStageMessages.length,
-            })
-        );
-    };
-
-    const popMessage = () => {
-        setStageMessages((prevStageMessages) => prevStageMessages.pop());
-    };
-
+function StageSettings({
+    StageMessages,
+    submitPrompt,
+    popMessage,
+    deletedMessage,
+    redoMessage,
+}) {
     return (
         <>
             <div style={{ width: "50vw" }}>
-                <NavBar
-                    StageMessages={StageMessages}
-                    setStageMessages={setStageMessages}
-                />
+                <NavBar StageMessages={StageMessages} />
                 <input type="text" style={{ width: "100%", height: "500px" }} />
-                <button onClick={submitPrompt}>Submit</button>
-                <button onClick={popMessage}>Undo</button>
-                <button>Redo</button>
+                <div style={{ display: "flex" }}>
+                    <button onClick={submitPrompt}>Submit</button>
+                    {deletedMessage ? (
+                        <p>Undo</p>
+                    ) : (
+                        <button onClick={popMessage}>Undo</button>
+                    )}
+                    {deletedMessage ? (
+                        <button onClick={redoMessage}>Redo</button>
+                    ) : (
+                        <p>Redo</p>
+                    )}
+                </div>
             </div>
         </>
     );

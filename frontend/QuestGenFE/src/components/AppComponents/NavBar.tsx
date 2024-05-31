@@ -1,4 +1,4 @@
-function NavBar({ StageMessages, setStageMessages }) {
+function NavBar({ StageMessages }) {
     // Import stage data
 
     return (

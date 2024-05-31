@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 function StageDisplay({ StageMessages }) {
+    useEffect(() => {
+        console.log({ StageMessages });
+    }, [StageMessages]);
     return (
         <>
             <div style={{ width: "50vw" }}>
