@@ -50,7 +50,7 @@ def query():
     chatbot = chatbots[uid]
     response = chatbot.query(prompt)
     print(response)
-    return response
+    return jsonify({'response': str(response)}), 200
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
