@@ -18,6 +18,7 @@
 
             fetch('http://localhost:3000/api/send-data', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },
