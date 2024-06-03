@@ -15,13 +15,10 @@ def init_chatbot():
     # chatbots[jerrz] = new chatbot()
     # chatbot.login()
     # return 'jerrz',200
-    if 'username' not in request.form:
-        return 'username field not in request', 400
-    if 'password' not in request.form:
-        return 'password field not in request', 400
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
     
-    username = request.form['username']
-    password = request.form['password']
 
     sign =  Login(username, password)
     cookies = sign.login(cookie_dir_path = './cookies/'+username, save_cookies=True)
