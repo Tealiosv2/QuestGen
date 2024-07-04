@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
-import { StageMessage } from "./Stage";
+import { StageMessage } from "./StageView";
 function StageSettings({
     StageMessages,
     submitPrompt,

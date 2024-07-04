@@ -29,11 +29,11 @@ export const doSignOut = () => {
   return auth.signOut();
 };
 
-export const doPasswordReset = (email) => {
+export const doPasswordReset = (email : string) => {
   return sendPasswordResetEmail(auth, email);
 };
 
-export const doPasswordChange = (password) => {
+export const doPasswordChange = (password: string) => {
   return updatePassword(auth.currentUser, password);
 };
 

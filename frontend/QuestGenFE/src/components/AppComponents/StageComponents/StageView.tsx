@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StageDisplay from "./StageDisplay";
 import StageSettings from "./StageSettings";
+import { doSignOut } from "../../../firebase/auth";
 
 // Each message point that appears on the stage display
 export type StageMessage = {
@@ -8,7 +9,7 @@ export type StageMessage = {
     key: number;
 };
 
-function Stage() {
+function StageView() {
     const [stageMessages, setStageMessages] = useState<StageMessage[]>([]);
 
     // Should only store the length-1 element
@@ -40,8 +41,13 @@ function Stage() {
         setDeletedMessage(undefined);
     };
 
+    const handleClick = () => {
+        doSignOut();
+    };
+
     return (
-        <>
+        <div>
+            <button onClick={handleClick}>Log Out</button>
             <div
                 style={{
                     display: "flex",
@@ -58,8 +64,8 @@ function Stage() {
                     redoMessage={redoMessage}
                 />
             </div>
-        </>
+        </div>
     );
 }
 
-export default Stage;
+export default StageView;

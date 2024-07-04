@@ -1,4 +1,6 @@
+import DefaultView from "./components/AppComponents/DefaultView.tsx";
 import Stage from "./components/AppComponents/Stage";
+import AuthProvider from "./contexts/authContext/index.tsx";
 
 const marginStyles = {
     marginLeft: "100px",
@@ -10,7 +12,7 @@ function App() {
     return (
         <>
             <div style={marginStyles}>
-                <Stage />
+                <AuthProvider children={<DefaultView />} />
             </div>
         </>
     );

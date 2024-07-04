@@ -12,6 +12,7 @@
   "dependencies": {
     "@fluentui/react": "^8.118.3",
     "@fluentui/web-components": "^2.6.1",
+    "firebase": "^10.12.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
