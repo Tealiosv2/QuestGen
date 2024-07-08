@@ -9,12 +9,30 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
-export const doCreateUserWithEmailAndPassword = async (email, password) => {
+export const doCreateUserWithEmailAndPassword = async (
+  email: string,
+  password: string
+) => {
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const doSignInWithEmailAndPassword = (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
+export const doSignInWithEmailAndPassword = (
+  email: string,
+  password: string
+) => {
+  return signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      return { success: true, user: userCredential, message: "User logged in" };
+    })
+    .catch((err) => {
+      if (err.code === "auth/invalid-email") {
+        return {
+          success: false,
+          user: null,
+          message: "Invalid email/password",
+        };
+      }
+    });
 };
 
 export const doSignInWithGoogle = async () => {
@@ -29,7 +47,7 @@ export const doSignOut = () => {
   return auth.signOut();
 };
 
-export const doPasswordReset = (email : string) => {
+export const doPasswordReset = (email: string) => {
   return sendPasswordResetEmail(auth, email);
 };
 
