@@ -5,26 +5,47 @@ import {
   doSignInWithGoogle,
 } from "../../../firebase/auth";
 
-enum PageMode {
-  LOGIN,
-  SIGNUP,
-}
-
 function LoginView() {
-  const [userInput, setUserInput] = useState<string>("");
+  const [emailInput, setUserInput] = useState<string>("");
   const [passwordInput, setPasswordInput] = useState<string>("");
 
   const [helperPrompt, setHelperPrompt] = useState<string>("");
 
-  const [pageMode, setPageMode] = useState<PageMode>(PageMode["LOGIN"]);
+  /** Custom params for valid passwords */
+  const passwordIsValid = (password: string) => {
+    if (password && password.length > 8) {
+      return true;
+    }
+    return false;
+  };
+
+  /** Custom params for valid usernames */
+  const emailIsValid = (username: string) => {
+    if (username) {
+      return true;
+    }
+    return false;
+  };
 
   const handleSignInWithGoogle = async () => {
     await doSignInWithGoogle();
   };
 
   const handleSignInWithEmail = () => {
-    if (pageMode === 0) {
-      doSignInWithEmailAndPassword(userInput, passwordInput)
+    doSignInWithEmailAndPassword(emailInput, passwordInput)
+      .then((result) => {
+        if (result && !result.success) {
+          setHelperPrompt(result.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleCreateAccountWithEmail = () => {
+    if (passwordIsValid(passwordInput) && emailIsValid(emailInput)) {
+      doCreateUserWithEmailAndPassword(emailInput, passwordInput)
         .then((result) => {
           if (result && !result.success) {
             setHelperPrompt(result.message);
@@ -33,35 +54,53 @@ function LoginView() {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      setHelperPrompt("Email or password is not valid");
     }
-
-    // doCreateUserWithEmailAndPassword(userInput, passwordInput)
-    // .then((result) => {
-    //   if (result && !result.success) {
-    //     setHelperPrompt(result.message);
-    //   }
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
   };
 
   return (
-    <div>
-      {pageMode === 0 ? <h1>Log In</h1> : <h1>Sign Up</h1>}
-      <input
-        placeholder="Username"
-        value={userInput}
-        onChange={(e) => setUserInput(e.target.value)}
-      ></input>
-      <input
-        placeholder="Password"
-        value={passwordInput}
-        onChange={(e) => setPasswordInput(e.target.value)}
-      ></input>
-      <button onClick={handleSignInWithEmail}>Login</button>
-      <button onClick={handleSignInWithGoogle}>Login with Google</button>
-      {helperPrompt ? <p>{helperPrompt}</p> : <></>}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div>
+        <h1>Sign In</h1>
+        <div>
+          <input
+            placeholder="Email"
+            value={emailInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            style={{ width: "100%", padding: 0 }}
+          ></input>
+        </div>
+        <div>
+          <input
+            placeholder="Password"
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.target.value)}
+            style={{ width: "100%", padding: 0 }}
+          ></input>
+        </div>
+
+        <div style={{ display: "flex" }}>
+          <button onClick={handleSignInWithEmail} style={{ width: "50%" }}>
+            Sign In
+          </button>
+          <button
+            onClick={handleCreateAccountWithEmail}
+            style={{ width: "50%" }}
+          >
+            Create Account
+          </button>
+        </div>
+        <button onClick={handleSignInWithGoogle} style={{ width: "100%" }}>
+          Sign In with Google
+        </button>
+        {helperPrompt ? <p>{helperPrompt}</p> : <></>}
+      </div>
     </div>
   );
 }

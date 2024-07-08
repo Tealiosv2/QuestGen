@@ -13,7 +13,18 @@ export const doCreateUserWithEmailAndPassword = async (
   email: string,
   password: string
 ) => {
-  return createUserWithEmailAndPassword(auth, email, password);
+  return createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      return { success: true, user: userCredential, message: "User logged in" };
+    })
+    .catch((err) => {
+      console.log(err);
+      return {
+        success: false,
+        user: null,
+        message: err.code,
+      };
+    });
 };
 
 export const doSignInWithEmailAndPassword = (
@@ -29,7 +40,7 @@ export const doSignInWithEmailAndPassword = (
         return {
           success: false,
           user: null,
-          message: "Invalid email/password",
+          message: err.code,
         };
       }
     });
